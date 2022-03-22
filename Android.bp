@@ -19,6 +19,23 @@ license {
     ],
 }
 
+soong_config_module_type {
+	name: "tinycompress_cc_defaults",
+	module_type: "cc_defaults",
+	config_namespace: "tinycompressnamespace",
+	bool_variables: ["ext_compress_format_enabled"],
+	properties: ["cflags"],
+}
+
+tinycompress_cc_defaults {
+	name: "tinycompress_defaults",
+	soong_config_variables: {
+		ext_compress_format_enabled: {
+			cflags: ["-DENABLE_EXTENDED_COMPRESS_FORMAT"],
+		}
+	}
+}
+
 cc_library_shared {
     name: "libtinycompress",
     vendor: true,
@@ -44,6 +61,7 @@ cc_library_shared {
     header_libs: [
         "device_kernel_headers",
     ],
+    defaults: ["tinycompress_defaults"],
 }
 
 cc_binary {

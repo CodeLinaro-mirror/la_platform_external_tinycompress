@@ -249,6 +249,8 @@ int compress_set_gapless_metadata(struct compress *compress,
  * @codec_options: codec options of compress stream based on codec type
  */
 
+#define SNDRV_COMPRESS_SET_NEXT_TRACK_PARAM\
+	_IOW('C', 0x80, union snd_codec_options)
 int compress_set_next_track_param(struct compress *compress,
 			union snd_codec_options *codec_options);
 #endif
