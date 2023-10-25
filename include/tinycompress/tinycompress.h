@@ -48,7 +48,12 @@
  * the Free Software Foundation, Inc.,
  * 51 Franklin St - Fifth Floor, Boston, MA 02110-1301 USA.
  */
-
+/*
+ * Changes from Qualcomm Innovation Center are provided under the following license:
+ *
+ * Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+ * SPDX-License-Identifier: BSD-3-Clause-Clear
+ */
 
 #ifndef __TINYCOMPRESS_H
 #define __TINYCOMPRESS_H
@@ -310,6 +315,17 @@ const char *compress_get_error(struct compress *compress);
 
 /* utility functions */
 unsigned int compress_get_alsa_rate(unsigned int rate);
+
+ /*
+  * compress_set_codec_params: set codec config intended for next track
+  * if DSP has support to switch CODEC config during gapless playback
+  * This API is expected to be called after compress_next_track is called
+  * return 0 on success, negative on error
+  *
+  * @compress: compress stream for which metadata has to set
+  * @codec: codec configuration for next track
+  */
+int compress_set_codec_params(struct compress *compress, struct snd_codec *codec);
 
 #ifdef ENABLE_EXTENDED_COMPRESS_FORMAT
 /* set metadata */

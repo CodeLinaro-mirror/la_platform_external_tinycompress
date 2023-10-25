@@ -27,6 +27,12 @@
 ** OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 ** IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
+/*
+** Changes from Qualcomm Innovation Center are provided under the following license:
+**
+** Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+** SPDX-License-Identifier: BSD-3-Clause-Clear
+**/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +90,9 @@ static int compress_plug_set_params(struct compress_plug_data *plug_data,
 	struct compress_plugin *plugin = plug_data->plugin;
 	int rc;
 
-	if (plugin->state != COMPRESS_PLUG_STATE_OPEN)
+	if (plugin->state == COMPRESS_PLUG_STATE_RUNNING)
+		return plugin->ops->set_params(plugin, params);
+	else if (plugin->state != COMPRESS_PLUG_STATE_OPEN)
 		return -EBADFD;
 
 	if (params->buffer.fragment_size == 0 ||
